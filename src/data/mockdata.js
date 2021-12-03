@@ -1,6 +1,4 @@
-const dataRealFood = () => {
-  
-};
+const dataRealFood = () => {};
 const dataFood = [
   {
     key: "01",
@@ -34,9 +32,7 @@ const columnsFood = [
   {
     title: "Mua/Bán",
     dataIndex: "status",
-    render: (value, idx, ob) => (
-      <button onClick={}> Mua</button>
-    ),
+    render: (value, idx, ob) => <button> Mua</button>,
   },
 ];
 const dataDrink = [
