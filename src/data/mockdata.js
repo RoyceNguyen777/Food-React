@@ -1,4 +1,3 @@
-const dataRealFood = () => {};
 const dataFood = [
   {
     key: "01",
@@ -32,7 +31,9 @@ const columnsFood = [
   {
     title: "Mua/Bán",
     dataIndex: "status",
-    render: (value, idx, ob) => <button> Mua</button>,
+    render: (value, idx, ob) => (
+      <button onClick={() => console.log(idx)}> Mua</button>
+    ),
   },
 ];
 const dataDrink = [
@@ -96,12 +97,4 @@ const columnsPer = [
     key: "gtri",
   },
 ];
-export {
-  dataDrink,
-  dataFood,
-  columnsFood,
-  columnsDrink,
-  dataPer,
-  columnsPer,
-  dataRealFood,
-};
+export { dataDrink, dataFood, columnsFood, columnsDrink, dataPer, columnsPer };

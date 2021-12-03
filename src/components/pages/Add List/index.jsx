@@ -7,7 +7,6 @@ import {
   columnsFood,
   dataDrink,
   dataFood,
-  dataRealFood,
 } from "../../../data/mockdata";
 
 const { Title } = Typography;
@@ -33,7 +32,6 @@ const StyleWrapperTitle = styled.div`
 
 function AddList(props) {
   const navigate = useNavigate();
-  console.log(dataRealFood);
   return (
     <div>
       <StyleWrapperTitle>
