@@ -1,6 +1,8 @@
 import React from "react";
 import { Typography, Button, Table } from "antd";
 import styled from "styled-components";
+import { columnsPer, dataPer } from "../../../data/mockdata";
+import { useNavigate } from "react-router";
 
 const { Title } = Typography;
 const Wrapper = styled.div`
@@ -20,44 +22,19 @@ const StyleTitle = styled(Title)`
 `;
 
 function Homepage(props) {
-  const dataSource = [
-    {
-      key: "1",
-      hovaten: "Mike",
-      sdt: 32,
-      gtri: "10 Downing Street",
-    },
-    {
-      key: "2",
-      hovaten: "John",
-      sdt: 42,
-      gtri: "10 Downing Street",
-    },
-  ];
-  const col = [
-    {
-      title: "Họ và tên",
-      dataIndex: "hovaten",
-      key: "hovaten",
-    },
-    {
-      title: "Số Điện Thoại",
-      dataIndex: "sdt",
-      key: "sdt",
-    },
-    {
-      title: "Giá Trị ĐH",
-      dataIndex: "gtri",
-      key: "gtri",
-    },
-  ];
+  const navigate = useNavigate();
+  const handlAdd = () => {
+    navigate("/add");
+  };
   return (
     <Wrapper>
       <StyleTitle level={1}>Danh Sách Khách Hàng</StyleTitle>
-      <StyleButton size={"large"}>Tạo Mới</StyleButton>
+      <StyleButton size={"large"} onClick={handlAdd}>
+        Tạo Mới
+      </StyleButton>
       <StyleTable
-        columns={col}
-        dataSource={dataSource}
+        columns={columnsPer}
+        dataSource={dataPer}
         pagination={false}
         bordered
       ></StyleTable>
