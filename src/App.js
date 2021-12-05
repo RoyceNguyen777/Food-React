@@ -4,9 +4,10 @@ import Add from "./components/pages/Add/";
 import Homepage from "./components/pages/Home";
 import AddList from "./components/pages/Add List";
 import InfoBill from "./components/pages/Info";
-import "antd/dist/antd.css";
+import 'antd/dist/antd.css';
 
 function App() {
+  
   return (
     <div className="App">
       <Routes>

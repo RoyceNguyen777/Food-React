@@ -1,12 +1,7 @@
 import React from "react";
 import { Typography, Table } from "antd";
 import styled from "styled-components";
-import {
-  columnsDrink,
-  columnsFood,
-  dataDrink,
-  dataFood,
-} from "../../../data/mockdata";
+
 
 const { Title } = Typography;
 
@@ -38,16 +33,16 @@ function InfoBill(props) {
           <div>
             <Title level={3}>List Đồ Ăn</Title>
             <StyleTable
-              dataSource={dataFood}
-              columns={columnsFood}
+              dataSource={'dataFood'}
+              columns={'columnsFood'}
               pagination={false}
             />
           </div>
           <div>
             <Title level={3}>List Đồ Uống</Title>
             <StyleTable
-              dataSource={dataDrink}
-              columns={columnsDrink}
+              dataSource={'dataDrink'}
+              columns={'columnsDrink'}
               pagination={false}
             />
           </div>

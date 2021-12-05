@@ -1,8 +1,8 @@
+import { Button, Table, Typography } from "antd";
 import React from "react";
-import { Typography, Button, Table } from "antd";
-import styled from "styled-components";
-import { columnsPer, dataPer } from "../../../data/mockdata";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import styled from "styled-components";
 
 const { Title } = Typography;
 const Wrapper = styled.div`
@@ -22,10 +22,36 @@ const StyleTitle = styled(Title)`
 `;
 
 function Homepage(props) {
+  // Data People
+  const columnsPer = [
+    {
+      title: "Họ và tên",
+      dataIndex: "hovaten",
+      key: "hovaten",
+    },
+    {
+      title: "Số Điện Thoại",
+      dataIndex: "sdt",
+      key: "sdt",
+    },
+    {
+      title: "Giá Trị ĐH",
+      dataIndex: "gtri",
+      key: "gtri",
+    },
+  ];
+
+  // Router
   const navigate = useNavigate();
   const handlAdd = () => {
     navigate("/add");
   };
+
+  
+  const personinfo = useSelector(state => state.person)
+  console.log('personInfo',personinfo);
+ 
+
   return (
     <Wrapper>
       <StyleTitle level={1}>Danh Sách Khách Hàng</StyleTitle>
@@ -34,7 +60,6 @@ function Homepage(props) {
       </StyleButton>
       <StyleTable
         columns={columnsPer}
-        dataSource={dataPer}
         pagination={false}
         bordered
       ></StyleTable>

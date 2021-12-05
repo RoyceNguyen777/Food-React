@@ -1,13 +1,7 @@
 import { Button, Space, Table, Typography } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import {
-  columnsDrink,
-  columnsFood,
-  dataDrink,
-  dataFood,
-} from "../../../data/mockdata";
 
 const { Title } = Typography;
 const StyleSpace = styled(Space)`
@@ -29,9 +23,149 @@ const StyleWrapperTitle = styled.div`
   flex-direction: column;
   margin: 0px 100px;
 `;
+const StyleTotal = styled.div`
+  margin-top:10px;
+  display:flex;
+  
+`
 
 function AddList(props) {
+
+  // Data Food 
+  const dataFood = [
+    {
+      key: "01",
+      name: "Phở",
+      prize: 30000,
+      status: true,
+    },
+    {
+      key: "02",
+      name: "Hủ Tiếu",
+      prize: 25000,
+      status: true,
+    },
+    {
+      key: "03",
+      name: "Bò Kho",
+      prize: 28000,
+      status: true,
+    },
+    {
+      key: "04",
+      name: "Bánh Canh",
+      prize: 23000,
+      status: true,
+    },
+    {
+      key: "05",
+      name: "Bún Bò",
+      prize: 35000,
+      status: true,
+    },
+  ];
+
+  const columnsFood = [
+    {
+      title: "STT",
+      dataIndex: "key",
+      key: "key",
+    },
+    {
+      title: "Món",
+      dataIndex: "name",
+      key: "key",
+    },
+    {
+      title: "Giá",
+      dataIndex: "prize",
+      key: "prize",
+    },
+    {
+      title: "Mua/Bán",
+      dataIndex: "status",
+      render: (value, idx, ob) => (
+        <button onClick={() => setCollectorFood([...CollectDataFood, idx])}> Mua</button>
+      ),
+    },
+  ];
+  const [CollectDataFood, setCollectorFood] = useState([])
+
+  // Data Drink 
+  const dataDrink = [
+    {
+      key: "01",
+      name: "Nước Cam",
+      prize: 15000,
+      status:true
+    },
+    {
+      key: "02",
+      name: "Nước Mía",
+      prize: 10000,
+      status:true
+    },
+    {
+      key: "03",
+      name: "Nước Dừa",
+      prize: 20000,
+      status:true
+    },
+    {
+      key: "04",
+      name: "Nước Suối",
+      prize: 12000,
+      status:true
+    },
+    {
+      key: "05",
+      name: "Nước Ngọc",
+      prize: 15000,
+      status:true
+    },
+  ];
+  const columnsDrink = [
+    {
+      title: "STT",
+      dataIndex: "key",
+      key: "key",
+    },
+    {
+      title: "Món",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Giá",
+      dataIndex: "prize",
+      key: "prize",
+    },
+    {
+      title: "Mua/Bán",
+      dataIndex: "status",
+      render: (value, idx, ob) => (
+        <button onClick={() => setCollectorDrink([...CollectDataDrink, idx])}> Mua</button>
+      ),
+    },
+  ];
+  const [CollectDataDrink, setCollectorDrink] = useState([])
+
+
+  //Total Prize
+  const totalPriceFood = CollectDataFood.reduce((total, food) => {
+    return total += food.prize
+  }, 0)
+  const totalPriceDrink = CollectDataDrink.reduce((total, food) => {
+    return total += food.prize
+  }, 0)
+  const TotalPrize = totalPriceFood + totalPriceDrink
+  const totalMoney = TotalPrize.toLocaleString({
+    style: 'currency',
+  })
+
+  // Router
   const navigate = useNavigate();
+
   return (
     <div>
       <StyleWrapperTitle>
@@ -41,7 +175,7 @@ function AddList(props) {
         <StyleSpace>
           <Button onClick={() => navigate("/")}>Hủy</Button>
           <Button onClick={() => navigate("/add")}>Quay lại</Button>
-          <Button>Lưu</Button>
+          <Button onClick={() => navigate("/")}>Lưu</Button>
         </StyleSpace>
       </StyleWrapperTitle>
 
@@ -53,6 +187,11 @@ function AddList(props) {
             columns={columnsFood}
             pagination={false}
           />
+          <StyleTotal>
+            <Title level={3}>Tổng Cộng :</Title>
+            <Title level={3} style={{ margin: 'auto' }}>{totalMoney} VND</Title>
+          </StyleTotal>
+
         </div>
         <div>
           <Title level={3}>List Đồ Uống</Title>

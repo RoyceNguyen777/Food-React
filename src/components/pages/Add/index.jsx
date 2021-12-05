@@ -1,7 +1,9 @@
-import { Button, Space, Form, Input, Typography } from "antd";
-import React, { useState } from "react";
+import { Button, Form, Input, Space, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { collect } from "../../../config/redux/PersonSilce";
 
 const { Title } = Typography;
 const Wrapper = styled.div`
@@ -17,6 +19,9 @@ const StyleForm = styled(Form)`
   display: flex;
   flex-direction: column;
   line-height: 2rem;
+  .ant-form-item-label {
+    width:20%
+  }
 `;
 const StyleFormGroup = styled.div`
   width: 25%;
@@ -27,16 +32,30 @@ const StyleInput = styled(Input)`
   font-size: 1.2rem;
 `;
 function Add(props) {
+  // Router
   const navigate = useNavigate();
-  const [Form, setForm] = useState({
+
+  const person = useSelector(state => state.person)
+  const dispatch = useDispatch()
+
+ 
+  const handlenext = () => {
+    dispatch(collect(FormValue))
+    if (FormValue.name && FormValue.phone && FormValue.adress) return navigate("/list");
+  };
+
+  //Form 
+  const [FormValue, setForm] = useState({
     name: "",
     phone: "",
     adress: "",
   });
-  const handlenext = () => {
-    if (Form.name && Form.phone && Form.adress) return navigate("/list");
-  };
 
+  // Persist Redux
+  useEffect(() => {
+    setForm(person)
+  }, [person]);
+  console.log('Person-Presist:',person);
   return (
     <Wrapper>
       <Title level={1} style={{ margin: "auto" }}>
@@ -51,27 +70,27 @@ function Add(props) {
           </Button>
         </StyleButton>
         <StyleFormGroup>
-          <StyleForm.Item label="Họ và tên">
+          <StyleForm.Item label="Họ Tên :">
             <StyleInput
               autoFocus
               required={true}
-              value={Form.name}
-              onChange={(e) => setForm({ ...Form, name: e.target.value })}
+              value={FormValue.name}
+              onChange={(e) => setForm({ ...FormValue, name: e.target.value })}
             ></StyleInput>
           </StyleForm.Item>
           <StyleForm.Item label="SĐT">
             <StyleInput
               type="tel"
               required
-              value={Form.phone}
-              onChange={(e) => setForm({ ...Form, phone: e.target.value })}
+              value={FormValue.phone}
+              onChange={(e) => setForm({ ...FormValue, phone: e.target.value })}
             ></StyleInput>
           </StyleForm.Item>
           <StyleForm.Item label="Địa Chỉ">
             <StyleInput
               required
-              value={Form.adress}
-              onChange={(e) => setForm({ ...Form, adress: e.target.value })}
+              value={FormValue.adress}
+              onChange={(e) => setForm({ ...FormValue, adress: e.target.value })}
             ></StyleInput>
           </StyleForm.Item>
         </StyleFormGroup>
