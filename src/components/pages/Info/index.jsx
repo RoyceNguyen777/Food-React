@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Table } from "antd";
 import styled from "styled-components";
-
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 
@@ -19,30 +19,79 @@ const StyleTable = styled(Table)`
 `;
 
 function InfoBill(props) {
+  const columnsDrink = [
+    {
+      title: "Món",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Giá",
+      dataIndex: "prize",
+      key: "prize",
+    },
+    {
+      title: "STT",
+      dataIndex: "key",
+      key: "key",
+    },
+  ];
+  const columnsFood = [
+    {
+      title: "Món",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Giá",
+      dataIndex: "prize",
+      key: "prize",
+    },
+    {
+      title: "STT",
+      dataIndex: "key",
+      key: "key",
+    },
+  ];
+  const privateInfo = useSelector((state) => state);
+  const { name, phone, adress, price, drink, food } = privateInfo.person;
+
   return (
     <div>
       <Wrapper>
         <Title level={1}>Chi Tiết Đơn Hàng</Title>
 
-        <p>Tên:</p>
-        <p>SĐT:</p>
-        <p>Địa Chỉ:</p>
-        <p>Giá trị ĐH: </p>
+        <Title level={2} style={{ fontStyle: "italic" }}>
+          Tên:
+          <span style={{ marginLeft: "20px", color: "red" }}>{name}</span>
+        </Title>
+        <Title level={2} style={{ fontStyle: "italic" }}>
+          SĐT:
+          <span style={{ marginLeft: "20px", color: "red" }}>{phone}</span>
+        </Title>
+        <Title level={2} style={{ fontStyle: "italic" }}>
+          Địa Chỉ:
+          <span style={{ marginLeft: "20px", color: "red" }}> {adress} </span>
+        </Title>
+        <Title level={2} style={{ fontStyle: "italic" }}>
+          Giá trị ĐH:
+          <span style={{ marginLeft: "20px", color: "red" }}>{price}</span>
+        </Title>
 
         <StyleWrapperBox>
           <div>
             <Title level={3}>List Đồ Ăn</Title>
             <StyleTable
-              dataSource={'dataFood'}
-              columns={'columnsFood'}
+              columns={columnsFood}
+              dataSource={food}
               pagination={false}
             />
           </div>
           <div>
             <Title level={3}>List Đồ Uống</Title>
             <StyleTable
-              dataSource={'dataDrink'}
-              columns={'columnsDrink'}
+              dataSource={drink}
+              columns={columnsDrink}
               pagination={false}
             />
           </div>

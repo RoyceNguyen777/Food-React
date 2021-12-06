@@ -1,7 +1,9 @@
 import { Button, Space, Table, Typography } from "antd";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { collectList } from "../../../config/redux/MainListSlice";
 
 const { Title } = Typography;
 const StyleSpace = styled(Space)`
@@ -24,14 +26,12 @@ const StyleWrapperTitle = styled.div`
   margin: 0px 100px;
 `;
 const StyleTotal = styled.div`
-  margin-top:10px;
-  display:flex;
-  
-`
+  margin-top: 10px;
+  display: flex;
+`;
 
 function AddList(props) {
-
-  // Data Food 
+  // Data Food
   const dataFood = [
     {
       key: "01",
@@ -85,43 +85,46 @@ function AddList(props) {
       title: "Mua/Bán",
       dataIndex: "status",
       render: (value, idx, ob) => (
-        <button onClick={() => setCollectorFood([...CollectDataFood, idx])}> Mua</button>
+        <button onClick={() => setCollectorFood([...CollectDataFood, idx])}>
+          {" "}
+          Mua
+        </button>
       ),
     },
   ];
-  const [CollectDataFood, setCollectorFood] = useState([])
+  const [CollectDataFood, setCollectorFood] = useState([]);
 
-  // Data Drink 
+  // Data Drink
   const dataDrink = [
     {
       key: "01",
       name: "Nước Cam",
       prize: 15000,
-      status:true
+      status: true,
     },
     {
       key: "02",
       name: "Nước Mía",
       prize: 10000,
-      status:true
+      status: true,
     },
     {
       key: "03",
       name: "Nước Dừa",
       prize: 20000,
-      status:true
+      status: true,
     },
     {
       key: "04",
       name: "Nước Suối",
       prize: 12000,
-      status:true
+      status: true,
     },
     {
       key: "05",
       name: "Nước Ngọc",
       prize: 15000,
-      status:true
+      status: true,
     },
   ];
   const columnsDrink = [
@@ -144,27 +147,49 @@ function AddList(props) {
       title: "Mua/Bán",
       dataIndex: "status",
       render: (value, idx, ob) => (
-        <button onClick={() => setCollectorDrink([...CollectDataDrink, idx])}> Mua</button>
+        <button onClick={() => setCollectorDrink([...CollectDataDrink, idx])}>
+          {" "}
+          Mua
+        </button>
       ),
     },
   ];
-  const [CollectDataDrink, setCollectorDrink] = useState([])
-
+  const [CollectDataDrink, setCollectorDrink] = useState([]);
 
   //Total Prize
   const totalPriceFood = CollectDataFood.reduce((total, food) => {
-    return total += food.prize
-  }, 0)
+    return (total += food.prize);
+  }, 0);
   const totalPriceDrink = CollectDataDrink.reduce((total, food) => {
-    return total += food.prize
-  }, 0)
-  const TotalPrize = totalPriceFood + totalPriceDrink
+    return (total += food.prize);
+  }, 0);
+  const TotalPrize = totalPriceFood + totalPriceDrink;
   const totalMoney = TotalPrize.toLocaleString({
-    style: 'currency',
-  })
+    style: "currency",
+  });
 
   // Router
   const navigate = useNavigate();
+
+  //Add all list
+  const personinfo = useSelector((state) => state.person);
+  const allist = useSelector((state) => state.allist);
+  const dispatch = useDispatch();
+
+  // Add price & id
+  const addid = allist.map((value, idx) => idx);
+  const addnewlist = {
+    ...personinfo,
+    price: totalMoney,
+    id: addid.length,
+    drink: CollectDataDrink,
+    food: CollectDataFood,
+  };
+
+  const Savedata = () => {
+    dispatch(collectList(addnewlist));
+    navigate("/");
+  };
 
   return (
     <div>
@@ -175,7 +200,7 @@ function AddList(props) {
         <StyleSpace>
           <Button onClick={() => navigate("/")}>Hủy</Button>
           <Button onClick={() => navigate("/add")}>Quay lại</Button>
-          <Button onClick={() => navigate("/")}>Lưu</Button>
+          <Button onClick={Savedata}>Lưu</Button>
         </StyleSpace>
       </StyleWrapperTitle>
 
@@ -189,9 +214,10 @@ function AddList(props) {
           />
           <StyleTotal>
             <Title level={3}>Tổng Cộng :</Title>
-            <Title level={3} style={{ margin: 'auto' }}>{totalMoney} VND</Title>
+            <Title level={3} style={{ margin: "auto" }}>
+              {totalMoney} VND
+            </Title>
           </StyleTotal>
-
         </div>
         <div>
           <Title level={3}>List Đồ Uống</Title>
