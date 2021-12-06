@@ -20,7 +20,7 @@ const StyleForm = styled(Form)`
   flex-direction: column;
   line-height: 2rem;
   .ant-form-item-label {
-    width:20%
+    width: 20%;
   }
 `;
 const StyleFormGroup = styled.div`
@@ -35,16 +35,16 @@ function Add(props) {
   // Router
   const navigate = useNavigate();
 
-  const person = useSelector(state => state.person)
-  const dispatch = useDispatch()
+  const person = useSelector((state) => state.person);
+  const dispatch = useDispatch();
 
- 
   const handlenext = () => {
-    dispatch(collect(FormValue))
-    if (FormValue.name && FormValue.phone && FormValue.adress) return navigate("/list");
+    dispatch(collect(FormValue));
+    if (FormValue.name && FormValue.phone && FormValue.adress)
+      return navigate("/list");
   };
 
-  //Form 
+  //Form
   const [FormValue, setForm] = useState({
     name: "",
     phone: "",
@@ -53,16 +53,17 @@ function Add(props) {
 
   // Persist Redux
   useEffect(() => {
-    setForm(person)
+    setForm(person);
   }, [person]);
-  console.log('Person-Presist:',person);
+  console.log("Person-Presist:", person);
+
   return (
     <Wrapper>
       <Title level={1} style={{ margin: "auto" }}>
         Thông tin KH{" "}
       </Title>
 
-      <StyleForm onFinish={handlenext} initialValues={{ remember: true }}>
+      <StyleForm onFinish={handlenext}>
         <StyleButton>
           <Button onClick={() => navigate("/")}>Hủy</Button>
           <Button htmlType="submit" onClick={handlenext}>
@@ -70,10 +71,9 @@ function Add(props) {
           </Button>
         </StyleButton>
         <StyleFormGroup>
-          <StyleForm.Item label="Họ Tên :">
+          <StyleForm.Item label="Họ Tên :" rules={[{ type: "number" }]}>
             <StyleInput
               autoFocus
-              required={true}
               value={FormValue.name}
               onChange={(e) => setForm({ ...FormValue, name: e.target.value })}
             ></StyleInput>
@@ -90,7 +90,9 @@ function Add(props) {
             <StyleInput
               required
               value={FormValue.adress}
-              onChange={(e) => setForm({ ...FormValue, adress: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...FormValue, adress: e.target.value })
+              }
             ></StyleInput>
           </StyleForm.Item>
         </StyleFormGroup>

@@ -63,7 +63,7 @@ function Homepage(props) {
             type="primary"
             danger
             onClick={() => {
-              const remove = MenuPerson.filter((item) => item.id !== ob);
+              const remove = MenuPerson.filter((item) => item.id !== idx.id);
               setMenu(remove);
               localStorage.clear("root");
               dispatch(collectItem(remove));

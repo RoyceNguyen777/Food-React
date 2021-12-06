@@ -1,7 +1,8 @@
 import React from "react";
-import { Typography, Table } from "antd";
+import { Typography, Table, Button } from "antd";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const { Title } = Typography;
 
@@ -55,6 +56,7 @@ function InfoBill(props) {
   ];
   const privateInfo = useSelector((state) => state);
   const { name, phone, adress, price, drink, food } = privateInfo.person;
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -96,6 +98,8 @@ function InfoBill(props) {
             />
           </div>
         </StyleWrapperBox>
+
+        <Button onClick={() => navigate("/")}>Back</Button>
       </Wrapper>
     </div>
   );
