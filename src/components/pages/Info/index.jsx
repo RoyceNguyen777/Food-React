@@ -31,11 +31,6 @@ function InfoBill(props) {
       dataIndex: "prize",
       key: "prize",
     },
-    {
-      title: "STT",
-      dataIndex: "key",
-      key: "key",
-    },
   ];
   const columnsFood = [
     {
@@ -47,11 +42,6 @@ function InfoBill(props) {
       title: "Giá",
       dataIndex: "prize",
       key: "prize",
-    },
-    {
-      title: "STT",
-      dataIndex: "key",
-      key: "key",
     },
   ];
   const privateInfo = useSelector((state) => state);
@@ -99,7 +89,9 @@ function InfoBill(props) {
           </div>
         </StyleWrapperBox>
 
-        <Button onClick={() => navigate("/")}>Back</Button>
+        <Button type="primary" onClick={() => navigate("/")}>
+          Back
+        </Button>
       </Wrapper>
     </div>
   );

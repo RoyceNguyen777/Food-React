@@ -71,7 +71,7 @@ function Add(props) {
           </Button>
         </StyleButton>
         <StyleFormGroup>
-          <StyleForm.Item label="Họ Tên :" rules={[{ type: "number" }]}>
+          <StyleForm.Item label="Họ Tên :">
             <StyleInput
               autoFocus
               value={FormValue.name}
@@ -80,7 +80,7 @@ function Add(props) {
           </StyleForm.Item>
           <StyleForm.Item label="SĐT">
             <StyleInput
-              type="tel"
+              type="number"
               required
               value={FormValue.phone}
               onChange={(e) => setForm({ ...FormValue, phone: e.target.value })}
