@@ -94,7 +94,6 @@ function Homepage(props) {
   const [MenuPerson, setMenu] = useState([]);
   useEffect(() => {
     setMenu(Allist);
-    console.log(Allist);
   }, [Allist]);
 
   return (

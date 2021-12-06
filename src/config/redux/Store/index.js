@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import MainListSlice from "../MainListSlice/index";
 import PersonSilce from "../PersonSilce";
+import MoneySilce from "../PriceSlice";
 
 const rootpersistConfig = {
   key: "root",
@@ -21,6 +22,7 @@ const rootpersistConfig = {
 const rootReducer = combineReducers({
   person: PersonSilce,
   allist: MainListSlice,
+  money: MoneySilce,
 });
 
 const persistedReducer = persistReducer(rootpersistConfig, rootReducer);

@@ -1,9 +1,10 @@
 import { Button, Space, Table, Typography } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { collectList } from "../../../config/redux/MainListSlice";
+import { collectMoney } from "../../../config/redux/PriceSlice";
 
 const { Title } = Typography;
 const StyleSpace = styled(Space)`
@@ -147,10 +148,10 @@ function AddList(props) {
       title: "Mua/Bán",
       dataIndex: "status",
       render: (value, idx, ob) => (
-        <button onClick={() => setCollectorDrink([...CollectDataDrink, idx])}>
-          {" "}
-          Mua
-        </button>
+        <input
+          type="checkbox"
+          onClick={() => setCollectorDrink([...CollectDataDrink, idx])}
+        ></input>
       ),
     },
   ];
@@ -181,7 +182,7 @@ function AddList(props) {
   const addnewlist = {
     ...personinfo,
     price: totalMoney,
-    id: addid.length,
+    id: addid.length + 1,
     drink: CollectDataDrink,
     food: CollectDataFood,
   };
@@ -191,6 +192,10 @@ function AddList(props) {
     navigate("/");
   };
 
+  const money = useSelector((state) => state.money);
+
+  console.log(money);
+  console.log(totalMoney);
   return (
     <div>
       <StyleWrapperTitle>
@@ -198,8 +203,23 @@ function AddList(props) {
           Thông tin đơn hàng
         </Title>
         <StyleSpace>
-          <Button onClick={() => navigate("/")}>Hủy</Button>
-          <Button onClick={() => navigate("/add")}>Quay lại</Button>
+          <Button
+            onClick={() => {
+              localStorage.clear("root");
+              navigate("/");
+              window.location.reload();
+            }}
+          >
+            Hủy
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(collectMoney(totalMoney));
+              navigate("/add");
+            }}
+          >
+            Quay lại
+          </Button>
           <Button onClick={Savedata}>Lưu</Button>
         </StyleSpace>
       </StyleWrapperTitle>
