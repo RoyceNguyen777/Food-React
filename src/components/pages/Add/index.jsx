@@ -1,5 +1,5 @@
 import { Button, Form, Input, Space, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -38,62 +38,46 @@ function Add(props) {
   const person = useSelector((state) => state.person);
   const dispatch = useDispatch();
 
-  const handlenext = () => {
-    dispatch(collect(FormValue));
-    if (FormValue.name && FormValue.phone && FormValue.adress)
-      return navigate("/list");
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    dispatch(collect(values));
+    if (values.name && values.phone && values.adress) return navigate("/list");
   };
-
-  //Form
-  const [FormValue, setForm] = useState({
-    name: "",
-    phone: "",
-    adress: "",
-  });
-
-  // Persist Redux
-  useEffect(() => {
-    setForm(person);
-  }, [person]);
-  console.log("Person-Presist:", person);
-
   return (
     <Wrapper>
       <Title level={1} style={{ margin: "auto" }}>
         Thông tin KH{" "}
       </Title>
 
-      <StyleForm onFinish={handlenext}>
+      <StyleForm onFinish={onFinish}>
         <StyleButton>
           <Button onClick={() => navigate("/")}>Hủy</Button>
-          <Button htmlType="submit" onClick={handlenext}>
-            Tiếp Tục
-          </Button>
+          <Button htmlType="submit">Tiếp Tục</Button>
         </StyleButton>
         <StyleFormGroup>
-          <StyleForm.Item label="Họ Tên :">
-            <StyleInput
-              autoFocus
-              value={FormValue.name}
-              onChange={(e) => setForm({ ...FormValue, name: e.target.value })}
-            ></StyleInput>
+          <StyleForm.Item
+            label="Họ Tên :"
+            name="name"
+            initialValue={person ? person.name : " "}
+            rules={[{ required: true, message: "Xin nhập họ và tên" }]}
+          >
+            <StyleInput></StyleInput>
           </StyleForm.Item>
-          <StyleForm.Item label="SĐT">
-            <StyleInput
-              type="number"
-              required
-              value={FormValue.phone}
-              onChange={(e) => setForm({ ...FormValue, phone: e.target.value })}
-            ></StyleInput>
+          <StyleForm.Item
+            label="SĐT"
+            name="phone"
+            initialValue={person.phone}
+            rules={[{ required: true, message: "Xin nhập số điện thoại!" }]}
+          >
+            <StyleInput></StyleInput>
           </StyleForm.Item>
-          <StyleForm.Item label="Địa Chỉ">
-            <StyleInput
-              required
-              value={FormValue.adress}
-              onChange={(e) =>
-                setForm({ ...FormValue, adress: e.target.value })
-              }
-            ></StyleInput>
+          <StyleForm.Item
+            label="Địa Chỉ"
+            name="adress"
+            initialValue={person.adress}
+            rules={[{ required: true, message: "Xin nhập địa chỉ!" }]}
+          >
+            <StyleInput></StyleInput>
           </StyleForm.Item>
         </StyleFormGroup>
       </StyleForm>

@@ -5,7 +5,7 @@ const CollectPrice = createSlice({
   initialState: "",
   reducers: {
     collectMoney(state, action) {
-      return action.payload;
+      return [...state, action.payload];
     },
   },
 });

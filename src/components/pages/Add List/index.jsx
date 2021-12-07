@@ -1,9 +1,10 @@
-import { Button, Space, Table, Typography } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Space, Table, Typography } from "antd";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { collectList } from "../../../config/redux/MainListSlice";
+import { collect } from "../../../config/redux/PersonSilce";
 import { collectMoney } from "../../../config/redux/PriceSlice";
 
 const { Title } = Typography;
@@ -94,7 +95,6 @@ function AddList(props) {
     },
   ];
   const [CollectDataFood, setCollectorFood] = useState([]);
-
   // Data Drink
   const dataDrink = [
     {
@@ -148,15 +148,12 @@ function AddList(props) {
       title: "Mua/Bán",
       dataIndex: "status",
       render: (value, idx, ob) => (
-        <input
-          type="checkbox"
-          onClick={() => setCollectorDrink([...CollectDataDrink, idx])}
-        ></input>
+        <Checkbox type="checkbox" value={idx}></Checkbox>
       ),
     },
   ];
-  const [CollectDataDrink, setCollectorDrink] = useState([]);
 
+  const [CollectDataDrink, setCollectorDrink] = useState([]);
   //Total Prize
   const totalPriceFood = CollectDataFood.reduce((total, food) => {
     return (total += food.prize);
@@ -192,10 +189,6 @@ function AddList(props) {
     navigate("/");
   };
 
-  const money = useSelector((state) => state.money);
-
-  console.log(money);
-  console.log(totalMoney);
   return (
     <div>
       <StyleWrapperTitle>
@@ -207,7 +200,7 @@ function AddList(props) {
             onClick={() => {
               localStorage.clear("root");
               navigate("/");
-              window.location.reload();
+              dispatch(collect([]));
             }}
           >
             Hủy
@@ -241,6 +234,7 @@ function AddList(props) {
         </div>
         <div>
           <Title level={3}>List Đồ Uống</Title>
+
           <StyleTable
             dataSource={dataDrink}
             columns={columnsDrink}
