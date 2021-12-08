@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { collectList } from "../../../config/redux/MainListSlice";
 import { collect } from "../../../config/redux/PersonSilce";
-import { collectMoney } from "../../../config/redux/PriceSlice";
 
 const { Title } = Typography;
 const StyleSpace = styled(Space)`
@@ -90,7 +89,6 @@ function AddList(props) {
         <Checkbox
           onChange={(e) => {
             const newCollectFood = { ...idx, status: e.target.checked };
-
             newCollectFood.status
               ? CollectDataFood.unshift(newCollectFood)
               : CollectDataFood.shift(newCollectFood);
@@ -98,8 +96,8 @@ function AddList(props) {
             const filterlist = CollectDataFood.filter(
               (item) => item.status === true
             );
-
             setCollectorFood(filterlist);
+            console.log("statleFood:", CollectDataFood);
           }}
         ></Checkbox>
       ),
@@ -170,6 +168,7 @@ function AddList(props) {
             const filterlist = CollectDataDrink.filter(
               (item) => item.status === true
             );
+            console.log("statleDrink:", CollectDataDrink);
             setCollectorDrink(filterlist);
           }}
         ></Checkbox>
@@ -232,7 +231,7 @@ function AddList(props) {
           </Button>
           <Button
             onClick={() => {
-              dispatch(collectMoney(totalMoney));
+              dispatch(collectList(addnewlist));
               navigate("/add");
             }}
           >
