@@ -43,6 +43,7 @@ function Add(props) {
     dispatch(collect(values));
     if (values.name && values.phone && values.adress) return navigate("/list");
   };
+
   return (
     <Wrapper>
       <Title level={1} style={{ margin: "auto" }}>
@@ -66,14 +67,15 @@ function Add(props) {
           <StyleForm.Item
             label="SĐT"
             name="phone"
-            initialValue={person.phone}
+            initialValue={person.phone ? person.phone : 0}
             rules={[
               {
                 required: true,
-                type: "number",
                 message: "Xin nhập số điện thoại!",
-                min: 10,
-                max: 11,
+              },
+              {
+                pattern: new RegExp("^(09|03|07|08|091)+([0-9]{8})$"),
+                message: "Xin hãy nhập chính xác sdt",
               },
             ]}
           >
