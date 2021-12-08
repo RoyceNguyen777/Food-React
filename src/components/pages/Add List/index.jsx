@@ -91,20 +91,20 @@ function AddList(props) {
           onChange={(e) => {
             const newCollectFood = { ...idx, status: e.target.checked };
             newCollectFood.status
-              ? CollectDataFood.unshift(newCollectFood)
-              : CollectDataFood.shift(newCollectFood);
+              ? collectdataFood.unshift(newCollectFood)
+              : collectdataFood.shift(newCollectFood);
 
-            const filterlist = CollectDataFood.filter(
+            const filterlist = collectdataFood.filter(
               (item) => item.status === true
             );
             setCollectorFood(filterlist);
-            console.log("statleFood:", CollectDataFood);
+            console.log("statleFood:", collectdataFood);
           }}
         ></Checkbox>
       ),
     },
   ];
-  const [CollectDataFood, setCollectorFood] = useState([]);
+  const [collectdataFood, setCollectorFood] = useState([]);
   // Data Drink
   const dataDrink = [
     {
@@ -163,13 +163,13 @@ function AddList(props) {
           onChange={(e) => {
             const newCollectDrink = { ...val, status: e.target.checked };
             newCollectDrink.status
-              ? CollectDataDrink.unshift(newCollectDrink)
-              : CollectDataDrink.shift(newCollectDrink);
+              ? collectdataDrink.unshift(newCollectDrink)
+              : collectdataDrink.shift(newCollectDrink);
 
-            const filterlist = CollectDataDrink.filter(
+            const filterlist = collectdataDrink.filter(
               (item) => item.status === true
             );
-            console.log("statleDrink:", CollectDataDrink);
+            console.log("statleDrink:", collectdataDrink);
             setCollectorDrink(filterlist);
           }}
         ></Checkbox>
@@ -177,13 +177,13 @@ function AddList(props) {
     },
   ];
 
-  const [CollectDataDrink, setCollectorDrink] = useState([]);
+  const [collectdataDrink, setCollectorDrink] = useState([]);
 
   //Total Prize
-  const totalPriceFood = CollectDataFood.reduce((total, food) => {
+  const totalPriceFood = collectdataFood.reduce((total, food) => {
     return (total += food.prize);
   }, 0);
-  const totalPriceDrink = CollectDataDrink.reduce((total, food) => {
+  const totalPriceDrink = collectdataDrink.reduce((total, food) => {
     return (total += food.prize);
   }, 0);
   const TotalPrize = totalPriceFood + totalPriceDrink;
@@ -205,8 +205,8 @@ function AddList(props) {
     ...personinfo,
     price: totalMoney,
     id: addid.length + 1,
-    drink: CollectDataDrink,
-    food: CollectDataFood,
+    drink: collectdataDrink,
+    food: collectdataFood,
   };
 
   const Savedata = () => {
