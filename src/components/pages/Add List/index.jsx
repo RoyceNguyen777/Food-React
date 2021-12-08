@@ -87,10 +87,21 @@ function AddList(props) {
       title: "Mua/Bán",
       dataIndex: "status",
       render: (value, idx, ob) => (
-        <button onClick={() => setCollectorFood([...CollectDataFood, idx])}>
-          {" "}
-          Mua
-        </button>
+        <Checkbox
+          onChange={(e) => {
+            const newCollectFood = { ...idx, status: e.target.checked };
+
+            newCollectFood.status
+              ? CollectDataFood.unshift(newCollectFood)
+              : CollectDataFood.shift(newCollectFood);
+
+            const filterlist = CollectDataFood.filter(
+              (item) => item.status === true
+            );
+
+            setCollectorFood(filterlist);
+          }}
+        ></Checkbox>
       ),
     },
   ];
@@ -148,12 +159,26 @@ function AddList(props) {
       title: "Mua/Bán",
       dataIndex: "status",
       render: (value, idx, ob) => (
-        <Checkbox type="checkbox" value={idx}></Checkbox>
+        <Checkbox
+          onChange={(e) => {
+            const newCollectDrink = { ...idx, status: e.target.checked };
+
+            newCollectDrink.status
+              ? CollectDataDrink.unshift(newCollectDrink)
+              : CollectDataDrink.shift(newCollectDrink);
+
+            const filterlist = CollectDataDrink.filter(
+              (item) => item.status === true
+            );
+            setCollectorDrink(filterlist);
+          }}
+        ></Checkbox>
       ),
     },
   ];
 
   const [CollectDataDrink, setCollectorDrink] = useState([]);
+
   //Total Prize
   const totalPriceFood = CollectDataFood.reduce((total, food) => {
     return (total += food.prize);

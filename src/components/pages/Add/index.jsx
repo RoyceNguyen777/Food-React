@@ -67,7 +67,15 @@ function Add(props) {
             label="SĐT"
             name="phone"
             initialValue={person.phone}
-            rules={[{ required: true, message: "Xin nhập số điện thoại!" }]}
+            rules={[
+              {
+                required: true,
+                type: "number",
+                message: "Xin nhập số điện thoại!",
+                min: 10,
+                max: 11,
+              },
+            ]}
           >
             <StyleInput></StyleInput>
           </StyleForm.Item>
