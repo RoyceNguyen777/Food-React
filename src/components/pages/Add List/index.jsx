@@ -111,31 +111,31 @@ function AddList(props) {
       key: "01",
       name: "Nước Cam",
       prize: 15000,
-      status: true,
+      status: false,
     },
     {
       key: "02",
       name: "Nước Mía",
       prize: 10000,
-      status: true,
+      status: false,
     },
     {
       key: "03",
       name: "Nước Dừa",
       prize: 20000,
-      status: true,
+      status: false,
     },
     {
       key: "04",
       name: "Nước Suối",
       prize: 12000,
-      status: true,
+      status: false,
     },
     {
       key: "05",
       name: "Nước Ngọc",
       prize: 15000,
-      status: true,
+      status: false,
     },
   ];
   const columnsDrink = [
@@ -159,6 +159,7 @@ function AddList(props) {
       dataIndex: "status",
       render: (bol, val, idx) => (
         <Checkbox
+          checked={val.status}
           onChange={(e) => {
             const newCollectDrink = { ...val, status: e.target.checked };
             newCollectDrink.status
@@ -212,7 +213,6 @@ function AddList(props) {
     dispatch(collectList(addnewlist));
     navigate("/");
   };
-
   return (
     <div>
       <StyleWrapperTitle>

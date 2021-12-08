@@ -52,7 +52,14 @@ function Add(props) {
 
       <StyleForm onFinish={onFinish}>
         <StyleButton>
-          <Button onClick={() => navigate("/")}>Hủy</Button>
+          <Button
+            onClick={() => {
+              dispatch(collect([]));
+              navigate("/");
+            }}
+          >
+            Hủy
+          </Button>
           <Button htmlType="submit">Tiếp Tục</Button>
         </StyleButton>
         <StyleFormGroup>
