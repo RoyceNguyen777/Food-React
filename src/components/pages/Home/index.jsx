@@ -42,7 +42,7 @@ function Homepage(props) {
       key: "phone",
     },
     {
-      title: "Địa trỉ",
+      title: "Địa chỉ",
       dataIndex: "adress",
       key: "adress",
     },

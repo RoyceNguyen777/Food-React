@@ -132,7 +132,7 @@ function AddList(props) {
     },
     {
       key: "05",
-      name: "Nước Ngọc",
+      name: "Nước Ngọt",
       prize: 15000,
       status: false,
     },
@@ -210,7 +210,7 @@ function AddList(props) {
     ...personinfo,
     price: totalMoney,
     id: addid.length + 1,
-    drink: stateDrink,
+    drink: collectdataDrink,
     food: collectdataFood,
   };
 
@@ -223,7 +223,9 @@ function AddList(props) {
     if (reduxlist.length !== 0) {
       setStateDrink(reduxlist);
     } else {
-      setStateDrink(dataFood);
+      setStateDrink(dataDrink);
+      setStateFood(dataFood);
+
     }
   }, [reduxlist]);
   return (
