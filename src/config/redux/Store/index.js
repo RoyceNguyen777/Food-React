@@ -17,8 +17,9 @@ import MoneySilce from "../PriceSlice";
 const rootpersistConfig = {
   key: "root",
   storage,
-  whilelist: ["person", "allist"],
+  whilelist: ["person", "allist", "money"],
 };
+
 const rootReducer = combineReducers({
   person: PersonSilce,
   allist: MainListSlice,

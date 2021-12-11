@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const CollectPrice = createSlice({
   name: "money",
-  initialState: "",
+  initialState: [],
   reducers: {
     collectMoney(state, action) {
       return action.payload;
@@ -10,5 +10,5 @@ const CollectPrice = createSlice({
   },
 });
 
-export const { collectMoney } = CollectPrice.actions;
+export const { collectMoney, collectState } = CollectPrice.actions;
 export default CollectPrice.reducer;

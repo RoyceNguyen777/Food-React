@@ -1,5 +1,5 @@
 import { Button, Checkbox, Space, Table, Typography } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -39,31 +39,31 @@ function AddList(props) {
       key: "01",
       name: "Phở",
       prize: 30000,
-      status: true,
+      status: false,
     },
     {
       key: "02",
       name: "Hủ Tiếu",
       prize: 25000,
-      status: true,
+      status: false,
     },
     {
       key: "03",
       name: "Bò Kho",
       prize: 28000,
-      status: true,
+      status: false,
     },
     {
       key: "04",
       name: "Bánh Canh",
       prize: 23000,
-      status: true,
+      status: false,
     },
     {
       key: "05",
       name: "Bún Bò",
       prize: 35000,
-      status: true,
+      status: false,
     },
   ];
 
@@ -86,19 +86,18 @@ function AddList(props) {
     {
       title: "Mua/Bán",
       dataIndex: "status",
-      render: (value, idx, ob) => (
+      render: (bol, val, idx) => (
         <Checkbox
           onChange={(e) => {
-            const newCollectFood = { ...idx, status: e.target.checked };
-            newCollectFood.status
-              ? collectdataFood.unshift(newCollectFood)
-              : collectdataFood.shift(newCollectFood);
+            const items = stateFood;
+            const item = items[idx];
+            item.status = e.target.checked;
+            items[idx] = item;
+            setStateFood(items);
 
-            const filterlist = collectdataFood.filter(
-              (item) => item.status === true
-            );
+            const filterlist = stateFood.filter((item) => item.status === true);
+
             setCollectorFood(filterlist);
-            console.log("statleFood:", collectdataFood);
           }}
         ></Checkbox>
       ),
@@ -138,6 +137,9 @@ function AddList(props) {
       status: false,
     },
   ];
+  const [stateDrink, setStateDrink] = useState(dataDrink);
+  const [stateFood, setStateFood] = useState(dataFood);
+
   const columnsDrink = [
     {
       title: "STT",
@@ -161,21 +163,24 @@ function AddList(props) {
         <Checkbox
           checked={val.status}
           onChange={(e) => {
-            const newCollectDrink = { ...val, status: e.target.checked };
-            newCollectDrink.status
-              ? collectdataDrink.unshift(newCollectDrink)
-              : collectdataDrink.shift(newCollectDrink);
+            const items = [...stateDrink];
+            const item = items[idx];
+            item.status = e.target.checked;
+            items[idx] = item;
 
-            const filterlist = collectdataDrink.filter(
+            setStateDrink(items);
+
+            const filterlist = stateDrink.filter(
               (item) => item.status === true
             );
-            console.log("statleDrink:", collectdataDrink);
+
             setCollectorDrink(filterlist);
           }}
         ></Checkbox>
       ),
     },
   ];
+  const reduxlist = useSelector((state) => state.money);
 
   const [collectdataDrink, setCollectorDrink] = useState([]);
 
@@ -205,14 +210,22 @@ function AddList(props) {
     ...personinfo,
     price: totalMoney,
     id: addid.length + 1,
-    drink: collectdataDrink,
+    drink: stateDrink,
     food: collectdataFood,
   };
 
   const Savedata = () => {
     dispatch(collectList(addnewlist));
+    dispatch(collect([]));
     navigate("/");
   };
+  useEffect(() => {
+    if (reduxlist.length !== 0) {
+      setStateDrink(reduxlist);
+    } else {
+      setStateDrink(dataFood);
+    }
+  }, [reduxlist]);
   return (
     <div>
       <StyleWrapperTitle>
@@ -223,16 +236,17 @@ function AddList(props) {
           <Button
             onClick={() => {
               localStorage.clear("root");
-              navigate("/");
               dispatch(collect([]));
+              dispatch(collectMoney([]));
+              navigate("/");
             }}
           >
             Hủy
           </Button>
           <Button
             onClick={() => {
-              dispatch(collectMoney(totalMoney));
               navigate("/add");
+              dispatch(collectMoney(stateDrink));
             }}
           >
             Quay lại
@@ -245,7 +259,7 @@ function AddList(props) {
         <div>
           <Title level={3}>List Đồ Ăn</Title>
           <StyleTable
-            dataSource={dataFood}
+            dataSource={stateFood}
             columns={columnsFood}
             pagination={false}
           />
@@ -260,7 +274,7 @@ function AddList(props) {
           <Title level={3}>List Đồ Uống</Title>
 
           <StyleTable
-            dataSource={dataDrink}
+            dataSource={stateDrink}
             columns={columnsDrink}
             pagination={false}
           />

@@ -8,7 +8,7 @@ const CollectAllist = createSlice({
       return [...state, action.payload];
     },
     collectItem(state, action) {
-      return action.payload ;
+      return action.payload;
     },
   },
 });

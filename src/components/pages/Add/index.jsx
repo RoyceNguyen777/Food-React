@@ -39,7 +39,6 @@ function Add(props) {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     dispatch(collect(values));
     if (values.name && values.phone && values.adress) return navigate("/list");
   };
