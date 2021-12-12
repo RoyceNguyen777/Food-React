@@ -87,6 +87,7 @@ function Homepage(props) {
   // Router
   const navigate = useNavigate();
   const handlAdd = () => {
+    dispatch(collect([]))
     navigate("/add");
   };
   const Allist = useSelector((state) => state.allist);

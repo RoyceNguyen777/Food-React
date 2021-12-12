@@ -1,4 +1,4 @@
-import { Button, Checkbox, Space, Table, Typography } from "antd";
+import { Button, Checkbox, Space, Table, Typography,message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -185,6 +185,7 @@ function AddList(props) {
 
   const [collectdataDrink, setCollectorDrink] = useState([]);
 
+  
   //Total Prize
   const totalPriceFood = collectdataFood.reduce((total, food) => {
     return (total += food.prize);
@@ -214,11 +215,17 @@ function AddList(props) {
     drink: collectdataDrink,
     food: collectdataFood,
   };
-
   const Savedata = () => {
-    dispatch(collectList(addnewlist));
-    dispatch(collect([]));
-    navigate("/");
+  
+    if(TotalPrize === 0) {
+      message.error('Xin hãy chọn sản phẩm')
+    } else {
+      message.success('Xin cảm ơn đã chọn sản phảm')
+      dispatch(collectList(addnewlist));
+      dispatch(collect([]));
+      dispatch(collectMoney([]));
+      navigate("/");
+    }
   };
 
   const dataFoodDrink = {
