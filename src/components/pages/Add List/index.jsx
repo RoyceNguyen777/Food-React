@@ -88,14 +88,16 @@ function AddList(props) {
       dataIndex: "status",
       render: (bol, val, idx) => (
         <Checkbox
-          onChange={(e) => {
-            const items = stateFood;
-            const item = items[idx];
-            item.status = e.target.checked;
-            items[idx] = item;
-            setStateFood(items);
+          checked={val.status}
 
-            const filterlist = stateFood.filter((item) => item.status === true);
+          onChange={(e) => {
+
+            const items = [...stateFood];
+            const item = { ...items[idx], status: e.target.checked }
+            items[idx] = {...item};
+            console.log(items)
+            setStateFood(items);
+            const filterlist = items.filter((item) => item.status === true);
 
             setCollectorFood(filterlist);
           }}
@@ -161,16 +163,17 @@ function AddList(props) {
       dataIndex: "status",
       render: (bol, val, idx) => (
         <Checkbox
-          checked={val.status}
+          checked={val.status === true}
           onChange={(e) => {
+
             const items = [...stateDrink];
-            const item = items[idx];
-            item.status = e.target.checked;
-            items[idx] = item;
+            const item = { ...items[idx], status: e.target.checked }
+            items[idx] = {...item};
+            console.log(items)
 
             setStateDrink(items);
 
-            const filterlist = stateDrink.filter(
+            const filterlist = items.filter(
               (item) => item.status === true
             );
 
@@ -219,9 +222,20 @@ function AddList(props) {
     dispatch(collect([]));
     navigate("/");
   };
+
+  const dataFoodDrink = {
+    drink: stateDrink,
+    totalmoneyDrink: collectdataDrink,
+    food: stateFood,
+    totalmoneyFood: collectdataFood,
+  }
   useEffect(() => {
     if (reduxlist.length !== 0) {
-      setStateDrink(reduxlist);
+      setStateDrink(reduxlist.drink);
+      setCollectorDrink(reduxlist.totalmoneyDrink)
+      setStateFood(reduxlist.food);
+      setCollectorFood(reduxlist.totalmoneyFood)
+
     } else {
       setStateDrink(dataDrink);
       setStateFood(dataFood);
@@ -248,7 +262,7 @@ function AddList(props) {
           <Button
             onClick={() => {
               navigate("/add");
-              dispatch(collectMoney(stateDrink));
+              dispatch(collectMoney(dataFoodDrink));
             }}
           >
             Quay lại
