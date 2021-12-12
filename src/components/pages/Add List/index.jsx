@@ -237,9 +237,8 @@ function AddList(props) {
     } else {
       setStateDrink(dataDrink);
       setStateFood(dataFood);
-
     }
-  }, [reduxlist]);
+  }, []);
   return (
     <div>
       <StyleWrapperTitle>
