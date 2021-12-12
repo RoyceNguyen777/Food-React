@@ -94,8 +94,7 @@ function AddList(props) {
 
             const items = [...stateFood];
             const item = { ...items[idx], status: e.target.checked }
-            items[idx] = {...item};
-            console.log(items)
+            items[idx] = { ...item };
             setStateFood(items);
             const filterlist = items.filter((item) => item.status === true);
 
@@ -168,8 +167,7 @@ function AddList(props) {
 
             const items = [...stateDrink];
             const item = { ...items[idx], status: e.target.checked }
-            items[idx] = {...item};
-            console.log(items)
+            items[idx] = { ...item };
 
             setStateDrink(items);
 
