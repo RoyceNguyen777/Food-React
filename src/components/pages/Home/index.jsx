@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { collectItem } from "../../../config/redux/MainListSlice";
 import { collect } from "../../../config/redux/PersonSilce";
 
+// Style-Components
 const { Title } = Typography;
 const Wrapper = styled.div`
   margin: 30px;
@@ -22,6 +23,8 @@ const StyleButton = styled(Button)`
 const StyleTitle = styled(Title)`
   margin: auto;
 `;
+
+
 
 function Homepage(props) {
   // Data People
@@ -84,14 +87,17 @@ function Homepage(props) {
       ),
     },
   ];
+
   // Router
   const navigate = useNavigate();
   const handlAdd = () => {
     dispatch(collect([]))
     navigate("/add");
   };
+
   const Allist = useSelector((state) => state.allist);
   const dispatch = useDispatch();
+  
   const [MenuPerson, setMenu] = useState([]);
   useEffect(() => {
     setMenu(Allist);

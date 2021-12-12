@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { collect } from "../../../config/redux/PersonSilce";
 
+// Style-Components
 const { Title } = Typography;
 const Wrapper = styled.div`
   margin: 50px 100px;
@@ -31,6 +32,9 @@ const StyleInput = styled(Input)`
   width: 100%;
   font-size: 1.2rem;
 `;
+
+
+
 function Add(props) {
   // Router
   const navigate = useNavigate();

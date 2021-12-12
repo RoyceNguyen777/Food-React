@@ -1,5 +1,5 @@
-import { Button, Checkbox, Space, Table, Typography,message } from "antd";
-import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Space, Table, Typography, message } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import { collectList } from "../../../config/redux/MainListSlice";
 import { collect } from "../../../config/redux/PersonSilce";
 import { collectMoney } from "../../../config/redux/PriceSlice";
 
+// Style-Components
 const { Title } = Typography;
 const StyleSpace = styled(Space)`
   display: flex;
@@ -105,6 +106,8 @@ function AddList(props) {
     },
   ];
   const [collectdataFood, setCollectorFood] = useState([]);
+  const [stateFood, setStateFood] = useState(dataFood);
+
   // Data Drink
   const dataDrink = [
     {
@@ -138,8 +141,6 @@ function AddList(props) {
       status: false,
     },
   ];
-  const [stateDrink, setStateDrink] = useState(dataDrink);
-  const [stateFood, setStateFood] = useState(dataFood);
 
   const columnsDrink = [
     {
@@ -181,20 +182,27 @@ function AddList(props) {
       ),
     },
   ];
-  const reduxlist = useSelector((state) => state.money);
 
   const [collectdataDrink, setCollectorDrink] = useState([]);
+  const [stateDrink, setStateDrink] = useState(dataDrink);
+
+
+  //Total Prize
+  const counterPrice = useCallback(() => {
+    const foodprice = collectdataFood.reduce((total, food) => {
+      return (total += food.prize);
+    }, 0);
+    const drinkprice = collectdataDrink.reduce((total, food) => {
+      return (total += food.prize);
+    }, 0);
+    const totalprice = foodprice + drinkprice
+
+    return totalprice
+  }, [collectdataFood, collectdataDrink])
+  
 
   
-  //Total Prize
-  const totalPriceFood = collectdataFood.reduce((total, food) => {
-    return (total += food.prize);
-  }, 0);
-  const totalPriceDrink = collectdataDrink.reduce((total, food) => {
-    return (total += food.prize);
-  }, 0);
-  const TotalPrize = totalPriceFood + totalPriceDrink;
-  const totalMoney = TotalPrize.toLocaleString({
+  const totalMoney = counterPrice().toLocaleString({
     style: "currency",
   });
 
@@ -203,10 +211,12 @@ function AddList(props) {
 
   //Add all list
   const personinfo = useSelector((state) => state.person);
+  const reduxlist = useSelector((state) => state.money);
+
   const allist = useSelector((state) => state.allist);
   const dispatch = useDispatch();
 
-  // Add price & id
+  // Add price & id to Redux
   const addid = allist.map((value, idx) => idx);
   const addnewlist = {
     ...personinfo,
@@ -215,9 +225,9 @@ function AddList(props) {
     drink: collectdataDrink,
     food: collectdataFood,
   };
-  const Savedata = () => {
-  
-    if(TotalPrize === 0) {
+
+  const savedata = () => {
+    if (counterPrice() === 0) {
       message.error('Xin hãy chọn sản phẩm')
     } else {
       message.success('Xin cảm ơn đã chọn sản phảm')
@@ -234,6 +244,8 @@ function AddList(props) {
     food: stateFood,
     totalmoneyFood: collectdataFood,
   }
+
+
   useEffect(() => {
     if (reduxlist.length !== 0) {
       setStateDrink(reduxlist.drink);
@@ -271,7 +283,7 @@ function AddList(props) {
           >
             Quay lại
           </Button>
-          <Button onClick={Savedata}>Lưu</Button>
+          <Button onClick={savedata}>Lưu</Button>
         </StyleSpace>
       </StyleWrapperTitle>
 
