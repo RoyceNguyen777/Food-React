@@ -41,10 +41,20 @@ function Add(props) {
   const person = useSelector((state) => state.person);
   const allist = useSelector((state) => state.allist);
   const dispatch = useDispatch();
-
   const onFinish = (values) => {
    
-    dispatch(collect(values));
+    if(person.length === 0 ) {
+      dispatch(collect(values));
+    } else {
+      const dataFoodDrink = {
+        drink: person.statedrink,
+        totalmoneyDrink: person.drink,
+        food: person.statefood,
+        totalmoneyFood: person.food,
+      };
+      dispatch(collectMoney(dataFoodDrink))
+    }
+    
     if (values.name && values.phone && values.adress) return navigate("/list");
   };
 
