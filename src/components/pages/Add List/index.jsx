@@ -227,6 +227,8 @@ function AddList(props) {
       dispatch(collectMoney([]));
       navigate("/");
     }
+    
+    console.log("all list",allist);
   };
   const dataFoodDrink = {
     drink: stateDrink,

@@ -40,22 +40,24 @@ function Add(props) {
 
   const person = useSelector((state) => state.person);
   const allist = useSelector((state) => state.allist);
+  const money = useSelector((state) => state.money);
+
   const dispatch = useDispatch();
   const onFinish = (values) => {
-   
-    if(person.length === 0 ) {
+    if (person.length === 0) {
       dispatch(collect(values));
     } else {
       const dataFoodDrink = {
-        drink: person.statedrink,
-        totalmoneyDrink: person.drink,
-        food: person.statefood,
-        totalmoneyFood: person.food,
+        drink: person.statedrink ? person.statedrink : money.drink ,
+        totalmoneyDrink: person.drink ? person.drink : money.totalmoneyDrink,
+        food: person.statefood ? person.statefood : money.food,
+        totalmoneyFood: person.food ? person.food : money.totalmoneyFood,
       };
       dispatch(collectMoney(dataFoodDrink))
+      dispatch(collect(values));
     }
-    
-    if (values.name && values.phone && values.adress) return navigate("/list");
+
+    navigate("/list");
   };
 
   return (
