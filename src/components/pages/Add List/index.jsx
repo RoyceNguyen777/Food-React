@@ -170,7 +170,6 @@ function AddList(props) {
   //handle Checked
   const handleChecked = (idx, e, state, setState, setCollect) => {
     const items = [...state];
-    console.log(idx);
     const item = { ...items[idx], status: e.target.checked };
     items[idx] = { ...item };
     setState(items);
@@ -206,7 +205,7 @@ function AddList(props) {
 
   const dispatch = useDispatch();
 
-  // Add price & id to Redux
+  // Add price & person to Redux
   const addid = allist.map((value, idx) => idx);
 
   const addnewlist = {
