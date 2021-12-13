@@ -1,4 +1,4 @@
-import { Button, Checkbox, Space, Table, Typography, message } from "antd";
+import { Button, Checkbox, message, Space, Table, Typography } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -177,7 +177,6 @@ function AddList(props) {
     const filterlist = items.filter((item) => item.status === true);
     setCollect(filterlist);
   };
-
   //Total Prize
   const counterPrice = useCallback(() => {
     const foodprice = collectdataFood.reduce((total, food) => {
@@ -212,6 +211,8 @@ function AddList(props) {
     ...personinfo,
     price: totalMoney,
     id: addid.length + 1,
+    statedrink: stateDrink,
+    statefood: stateFood,
     drink: collectdataDrink,
     food: collectdataFood,
   };
@@ -227,7 +228,6 @@ function AddList(props) {
       navigate("/");
     }
   };
-
   const dataFoodDrink = {
     drink: stateDrink,
     totalmoneyDrink: collectdataDrink,

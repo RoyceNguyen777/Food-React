@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { collect } from "../../../config/redux/PersonSilce";
+import { collectMoney } from "../../../config/redux/PriceSlice";
 
 // Style-Components
 const { Title } = Typography;
@@ -33,16 +34,16 @@ const StyleInput = styled(Input)`
   font-size: 1.2rem;
 `;
 
-
-
 function Add(props) {
   // Router
   const navigate = useNavigate();
 
   const person = useSelector((state) => state.person);
+  const allist = useSelector((state) => state.allist);
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
+   
     dispatch(collect(values));
     if (values.name && values.phone && values.adress) return navigate("/list");
   };
@@ -50,7 +51,7 @@ function Add(props) {
   return (
     <Wrapper>
       <Title level={1} style={{ margin: "auto" }}>
-        Thông tin KH{" "}
+        Thông tin KH
       </Title>
 
       <StyleForm onFinish={onFinish}>

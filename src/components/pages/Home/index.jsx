@@ -24,8 +24,6 @@ const StyleTitle = styled(Title)`
   margin: auto;
 `;
 
-
-
 function Homepage(props) {
   // Data People
   const columnsPer = [
@@ -64,6 +62,15 @@ function Homepage(props) {
         >
           <Button
             type="primary"
+            onClick={() => {
+              dispatch(collect(idx));
+              navigate(`/add/${idx.id}`);
+            }}
+          >
+            Chỉnh sửa
+          </Button>
+          <Button
+            type="primary"
             danger
             onClick={() => {
               const remove = MenuPerson.filter((item) => item.id !== idx.id);
@@ -91,13 +98,13 @@ function Homepage(props) {
   // Router
   const navigate = useNavigate();
   const handlAdd = () => {
-    dispatch(collect([]))
+    dispatch(collect([]));
     navigate("/add");
   };
 
   const Allist = useSelector((state) => state.allist);
   const dispatch = useDispatch();
-  
+
   const [MenuPerson, setMenu] = useState([]);
   useEffect(() => {
     setMenu(Allist);

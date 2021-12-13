@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/add" element={<Add />} />
+        <Route path="/add/:id" element={<Add />} />
         <Route path="/list" element={<AddList />} />
         <Route path="/info" element={<InfoBill />} />
       </Routes>
