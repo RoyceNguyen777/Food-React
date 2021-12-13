@@ -90,16 +90,8 @@ function AddList(props) {
       render: (bol, val, idx) => (
         <Checkbox
           checked={val.status}
-
           onChange={(e) => {
-
-            const items = [...stateFood];
-            const item = { ...items[idx], status: e.target.checked }
-            items[idx] = { ...item };
-            setStateFood(items);
-            const filterlist = items.filter((item) => item.status === true);
-
-            setCollectorFood(filterlist);
+            handleChecked(idx, e, stateFood, setStateFood, setCollectorFood);
           }}
         ></Checkbox>
       ),
@@ -165,18 +157,7 @@ function AddList(props) {
         <Checkbox
           checked={val.status === true}
           onChange={(e) => {
-
-            const items = [...stateDrink];
-            const item = { ...items[idx], status: e.target.checked }
-            items[idx] = { ...item };
-
-            setStateDrink(items);
-
-            const filterlist = items.filter(
-              (item) => item.status === true
-            );
-
-            setCollectorDrink(filterlist);
+            handleChecked(idx, e, stateDrink, setStateDrink, setCollectorDrink);
           }}
         ></Checkbox>
       ),
@@ -186,6 +167,17 @@ function AddList(props) {
   const [collectdataDrink, setCollectorDrink] = useState([]);
   const [stateDrink, setStateDrink] = useState(dataDrink);
 
+  //handle Checked
+  const handleChecked = (idx, e, state, setState, setCollect) => {
+    const items = [...state];
+    console.log(idx);
+    const item = { ...items[idx], status: e.target.checked };
+    items[idx] = { ...item };
+    setState(items);
+
+    const filterlist = items.filter((item) => item.status === true);
+    setCollect(filterlist);
+  };
 
   //Total Prize
   const counterPrice = useCallback(() => {
@@ -195,13 +187,11 @@ function AddList(props) {
     const drinkprice = collectdataDrink.reduce((total, food) => {
       return (total += food.prize);
     }, 0);
-    const totalprice = foodprice + drinkprice
+    const totalprice = foodprice + drinkprice;
 
-    return totalprice
-  }, [collectdataFood, collectdataDrink])
-  
+    return totalprice;
+  }, [collectdataFood, collectdataDrink]);
 
-  
   const totalMoney = counterPrice().toLocaleString({
     style: "currency",
   });
@@ -212,12 +202,13 @@ function AddList(props) {
   //Add all list
   const personinfo = useSelector((state) => state.person);
   const reduxlist = useSelector((state) => state.money);
-
   const allist = useSelector((state) => state.allist);
+
   const dispatch = useDispatch();
 
   // Add price & id to Redux
   const addid = allist.map((value, idx) => idx);
+
   const addnewlist = {
     ...personinfo,
     price: totalMoney,
@@ -228,9 +219,9 @@ function AddList(props) {
 
   const savedata = () => {
     if (counterPrice() === 0) {
-      message.error('Xin hãy chọn sản phẩm')
+      message.error("Xin hãy chọn sản phẩm");
     } else {
-      message.success('Xin cảm ơn đã chọn sản phảm')
+      message.success("Xin cảm ơn đã chọn sản phảm");
       dispatch(collectList(addnewlist));
       dispatch(collect([]));
       dispatch(collectMoney([]));
@@ -243,21 +234,20 @@ function AddList(props) {
     totalmoneyDrink: collectdataDrink,
     food: stateFood,
     totalmoneyFood: collectdataFood,
-  }
-
+  };
 
   useEffect(() => {
     if (reduxlist.length !== 0) {
       setStateDrink(reduxlist.drink);
-      setCollectorDrink(reduxlist.totalmoneyDrink)
+      setCollectorDrink(reduxlist.totalmoneyDrink);
       setStateFood(reduxlist.food);
-      setCollectorFood(reduxlist.totalmoneyFood)
-
+      setCollectorFood(reduxlist.totalmoneyFood);
     } else {
       setStateDrink(dataDrink);
       setStateFood(dataFood);
     }
   }, []);
+
   return (
     <div>
       <StyleWrapperTitle>
