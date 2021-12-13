@@ -155,7 +155,7 @@ function AddList(props) {
       dataIndex: "status",
       render: (bol, val, idx) => (
         <Checkbox
-          checked={val.status === true}
+          checked={val.status }
           onChange={(e) => {
             handleChecked(idx, e, stateDrink, setStateDrink, setCollectorDrink);
           }}
@@ -227,6 +227,7 @@ function AddList(props) {
       navigate("/");
     }
   };
+
 
   const dataFoodDrink = {
     drink: stateDrink,
