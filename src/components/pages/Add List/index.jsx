@@ -219,7 +219,7 @@ function AddList(props) {
         : addid.length === "0"
         ? addid.length
         : addid.length - 1,
-    id: addid.length + 1,
+    id: param.id === "undefined" ? addid.length + 1 : addid.length,
     statedrink: stateDrink,
     statefood: stateFood,
     drink: collectdataDrink,
