@@ -231,7 +231,6 @@ function AddList(props) {
     let item = items.find((i) => i.id === Number(param.id));
     item = addnewlist;
     items[paramNumber] = item;
-    console.log(items);
 
     if (counterPrice() === 0) {
       message.error("Xin hãy chọn sản phẩm");
