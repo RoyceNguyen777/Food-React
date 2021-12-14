@@ -91,7 +91,7 @@ function Add(props) {
           <StyleForm.Item
             label="SĐT"
             name="phone"
-            initialValue={person.phone ? person.phone : 0}
+            initialValue={person.phone}
             rules={[
               {
                 required: true,
