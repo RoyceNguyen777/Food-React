@@ -1,9 +1,9 @@
 import { Button, Checkbox, message, Space, Table, Typography } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { collectList } from "../../../config/redux/MainListSlice";
+import { collectItem, collectList } from "../../../config/redux/MainListSlice";
 import { collect } from "../../../config/redux/PersonSilce";
 import { collectMoney } from "../../../config/redux/PriceSlice";
 
@@ -207,9 +207,18 @@ function AddList(props) {
   // Add price & person to Redux
   const addid = allist.map((value, idx) => idx);
 
+  const param = useParams();
+  const paramNumber = Number(param.id);
+
   const addnewlist = {
     ...personinfo,
     price: totalMoney,
+    key:
+      param.id === "undefined"
+        ? addid.length
+        : addid.length === "0"
+        ? addid.length
+        : addid.length - 1,
     id: addid.length + 1,
     statedrink: stateDrink,
     statefood: stateFood,
@@ -218,17 +227,31 @@ function AddList(props) {
   };
 
   const savedata = () => {
+    let items = [...allist];
+    let item = items.find((i) => i.id === Number(param.id));
+    item = addnewlist;
+    items[paramNumber] = item;
+    console.log(items);
+
     if (counterPrice() === 0) {
       message.error("Xin hãy chọn sản phẩm");
     } else {
-      message.success("Xin cảm ơn đã chọn sản phảm");
-      dispatch(collectList(addnewlist));
-      dispatch(collect([]));
-      dispatch(collectMoney([]));
-      navigate("/");
+      if (param.id === "undefined") {
+        message.success("Xin cảm ơn đã chọn sản phảm");
+        dispatch(collectList(addnewlist));
+        dispatch(collect([]));
+        dispatch(collectMoney([]));
+        navigate("/");
+        console.log("Tạo mới");
+      } else {
+        message.success("Xin cảm ơn đã chọn sản phảm");
+        dispatch(collectItem(items));
+        dispatch(collect([]));
+        dispatch(collectMoney([]));
+        navigate("/");
+        console.log("Sửa mục");
+      }
     }
-    
-    console.log("all list",allist);
   };
   const dataFoodDrink = {
     drink: stateDrink,

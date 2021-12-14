@@ -1,7 +1,7 @@
 import { Button, Form, Input, Space, Typography } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { collect } from "../../../config/redux/PersonSilce";
 import { collectMoney } from "../../../config/redux/PriceSlice";
@@ -37,7 +37,8 @@ const StyleInput = styled(Input)`
 function Add(props) {
   // Router
   const navigate = useNavigate();
-
+  const param = useParams();
+  console.log(param);
   const person = useSelector((state) => state.person);
   const allist = useSelector((state) => state.allist);
   const money = useSelector((state) => state.money);
@@ -48,16 +49,16 @@ function Add(props) {
       dispatch(collect(values));
     } else {
       const dataFoodDrink = {
-        drink: person.statedrink ? person.statedrink : money.drink ,
+        drink: person.statedrink ? person.statedrink : money.drink,
         totalmoneyDrink: person.drink ? person.drink : money.totalmoneyDrink,
         food: person.statefood ? person.statefood : money.food,
         totalmoneyFood: person.food ? person.food : money.totalmoneyFood,
       };
-      dispatch(collectMoney(dataFoodDrink))
+      dispatch(collectMoney(dataFoodDrink));
       dispatch(collect(values));
     }
 
-    navigate("/list");
+    navigate(`/list/${param.id}`);
   };
 
   return (

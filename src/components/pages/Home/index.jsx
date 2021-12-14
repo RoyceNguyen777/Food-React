@@ -64,7 +64,7 @@ function Homepage(props) {
             type="primary"
             onClick={() => {
               dispatch(collect(idx));
-              navigate(`/add/${idx.id}`);
+              navigate(`/add/${idx.key}`);
             }}
           >
             Chỉnh sửa
@@ -103,7 +103,6 @@ function Homepage(props) {
   };
 
   const Allist = useSelector((state) => state.allist);
-
 
   const dispatch = useDispatch();
 
